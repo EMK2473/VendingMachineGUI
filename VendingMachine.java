@@ -6,8 +6,13 @@ public class VendingMachine {
        bottles = 20;
     }
  
-    public void purchase(int amount){
-       bottles = bottles - amount;
+    public boolean purchase(int amount){
+      if(amount <= bottles){
+       bottles -= amount;
+       return true; 
+      } else {
+         return false;
+       }
     }
    
     public int getInventory(){
