@@ -6,7 +6,7 @@ public class Main {
 
         while (true) {
             String[] options = {"Customer", "Vendor", "Exit"};
-            int userType = JOptionPane.showOptionDialog(null, 
+            int userType = JOptionPane.showOptionDialog(null, "Current Bottles in inventory: " + vendingMachine.getInventory() + "\n" +
                 "Choose one: Customer or Vendor", 
                 "Vending Machine", 
                 JOptionPane.DEFAULT_OPTION, 
@@ -26,22 +26,35 @@ public class Main {
 
                 // if customer
                 else if(userType == 0){
-                  String purchaseInput = JOptionPane.showInputDialog(null, "Current Bottles in inventory: " + vendingMachine.getInventory() + "\nHow many bottles would you like to purchase?");
+                  boolean validInput = false;
 
-                  try {
-                     int purchaseAmountInt = Integer.parseInt(purchaseInput);
-                     boolean purchaseSuccess = vendingMachine.purchase(purchaseAmountInt);
+                  while(!validInput){
+                     String purchaseInput = JOptionPane.showInputDialog(null, "Current Bottles in inventory: " + vendingMachine.getInventory() + "\nHow many bottles would you like to purchase?");
                      
-                     if(purchaseSuccess){
-                        JOptionPane.showMessageDialog(null, "Thank you for your purchase!\n" + "Bottles left: " + vendingMachine.getInventory());
-                     } else {
-                        JOptionPane.showInternalMessageDialog(null, "Sorry, insufficient bottles in inventory :( ");
-                        JOptionPane.showMessageDialog(null, purchaseInput);
+                     int purchaseAmountInt = Integer.parseInt(purchaseInput);
+                     try {
+                     
+
+                        if (purchaseAmountInt < 0) {
+                           JOptionPane.showMessageDialog(null, "Please enter a non-negative number.");
+                           continue; 
+                        }
+
+
+                        boolean purchaseSuccess = vendingMachine.purchase(purchaseAmountInt);
+                     
+                        if (purchaseSuccess){
+                           JOptionPane.showMessageDialog(null, "Thank you for your purchase!\n" + "Bottles left: " + vendingMachine.getInventory());
+                        } else {
+                           JOptionPane.showInternalMessageDialog(null, "Sorry, insufficient bottles in inventory :( ");
+                           JOptionPane.showMessageDialog(null, purchaseInput);
+                        }
+
+                        validInput = true;
+
+                     } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
                      }
-
-
-                  } catch (NumberFormatException e) {
-                     JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
                   }
 
 
@@ -59,24 +72,31 @@ public class Main {
                   }
 
                } 
-                // if vendor
+               // if vendor
                else if (userType == 1) {
-                  String restockInput = JOptionPane.showInputDialog(null, 
-                  "Current Bottles in inventory: " + vendingMachine.getInventory() + 
-                  "\nHow many bottles would you like to restock?");
+                  boolean validInput = false;
 
-                  try {
-                     int restockAmountInt = Integer.parseInt(restockInput);
-                  
-                     if (restockAmountInt < 0) {
-                      JOptionPane.showMessageDialog(null, "Please enter a non-negative number.");
-                      continue;
-                  }
+                  while(!validInput){
+                     String restockInput = JOptionPane.showInputDialog(null, 
+                     "Current Bottles in inventory: " + vendingMachine.getInventory() + 
+                     "\nHow many bottles would you like to restock?");
 
-                  vendingMachine.restock(restockAmountInt);
-                  JOptionPane.showMessageDialog(null, "Inventory restocked!\nBottles in inventory: " + vendingMachine.getInventory());
-                  } catch (NumberFormatException e) {
-                     JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
+                     try {
+                        int restockAmountInt = Integer.parseInt(restockInput);
+                     
+                        if (restockAmountInt < 0) {
+                         JOptionPane.showMessageDialog(null, "Please enter a non-negative number.");
+                         continue;
+                     }
+
+                     vendingMachine.restock(restockAmountInt);
+                     JOptionPane.showMessageDialog(null, "Inventory restocked!\nBottles in inventory: " + vendingMachine.getInventory());
+
+                     validInput = true;
+
+                     } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
+                     }
                   }
                }
 
