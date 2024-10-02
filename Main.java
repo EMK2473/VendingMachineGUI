@@ -13,10 +13,17 @@ public class Main {
                 JOptionPane.INFORMATION_MESSAGE, 
                 null, options, options[0]);
 
+                // if exit
                 if(userType == 2){
-                  System.exit(0);
+                  int exitConfirmation = JOptionPane.showConfirmDialog(null, 
+                    "Are you sure you want to exit?", 
+                    "Exit Confirmation", 
+                    JOptionPane.YES_NO_OPTION);
+                  if (exitConfirmation == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                  }
                 }
-
+                
                 // if customer
                 if(userType == 0){
                   String purchaseInput = JOptionPane.showInputDialog(null, "Current Bottles in inventory: " + vendingMachine.getInventory() + "\nHow many bottles would you like to purchase?");
