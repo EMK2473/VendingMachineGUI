@@ -23,9 +23,9 @@ public class Main {
                     System.exit(0);
                   }
                 }
-                
+
                 // if customer
-                if(userType == 0){
+                else if(userType == 0){
                   String purchaseInput = JOptionPane.showInputDialog(null, "Current Bottles in inventory: " + vendingMachine.getInventory() + "\nHow many bottles would you like to purchase?");
 
                   try {
@@ -58,8 +58,30 @@ public class Main {
                      break;
                   }
 
-                } 
+               } 
+                // if vendor
+               else if (userType == 1) {
+                  String restockInput = JOptionPane.showInputDialog(null, 
+                  "Current Bottles in inventory: " + vendingMachine.getInventory() + 
+                  "\nHow many bottles would you like to restock?");
 
-        }
+                  try {
+                     int restockAmountInt = Integer.parseInt(restockInput);
+                  
+                     if (restockAmountInt < 0) {
+                      JOptionPane.showMessageDialog(null, "Please enter a non-negative number.");
+                      continue;
+                  }
+
+                  vendingMachine.restock(restockAmountInt);
+                  JOptionPane.showMessageDialog(null, "Inventory restocked!\nBottles in inventory: " + vendingMachine.getInventory());
+                  } catch (NumberFormatException e) {
+                     JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.");
+                  }
+               }
+
+         }
+
+      }
     }
-}
+
