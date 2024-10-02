@@ -30,10 +30,13 @@ public class Main {
 
                   while(!validInput){
                      String purchaseInput = JOptionPane.showInputDialog(null, "Current Bottles in inventory: " + vendingMachine.getInventory() + "\nHow many bottles would you like to purchase?");
-                     
-                     int purchaseAmountInt = Integer.parseInt(purchaseInput);
+
+                     if (purchaseInput == null) {
+                        break;
+                     }
+
                      try {
-                     
+                        int purchaseAmountInt = Integer.parseInt(purchaseInput);
 
                         if (purchaseAmountInt < 0) {
                            JOptionPane.showMessageDialog(null, "Please enter a non-negative number.");
@@ -47,7 +50,6 @@ public class Main {
                            JOptionPane.showMessageDialog(null, "Thank you for your purchase!\n" + "Bottles left: " + vendingMachine.getInventory());
                         } else {
                            JOptionPane.showInternalMessageDialog(null, "Sorry, insufficient bottles in inventory :( ");
-                           JOptionPane.showMessageDialog(null, purchaseInput);
                         }
 
                         validInput = true;
@@ -80,6 +82,10 @@ public class Main {
                      String restockInput = JOptionPane.showInputDialog(null, 
                      "Current Bottles in inventory: " + vendingMachine.getInventory() + 
                      "\nHow many bottles would you like to restock?");
+
+                     if (restockInput == null) {
+                        break; 
+                     }
 
                      try {
                         int restockAmountInt = Integer.parseInt(restockInput);
